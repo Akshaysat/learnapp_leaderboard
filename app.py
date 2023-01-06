@@ -47,7 +47,7 @@ def run_query(query):
 
 st.write("----")
 
-cohort_name = st.selectbox("Select the cohort", ["latd-02"])
+cohort_name = st.selectbox("Select the cohort", ["latd-02", "latd-03", "lifs-02"])
 
 sheet_url = st.secrets[f"private_gsheets_url_{cohort_name}"]
 rows = run_query(f'SELECT * FROM "{sheet_url}"')
