@@ -48,18 +48,21 @@ def run_query(query):
 st.write("----")
 
 cohort_name = st.selectbox("Select the cohort", ["latd-02", "latd-03", "lifs-02"])
-
-sheet_url = st.secrets[f"private_gsheets_url_{cohort_name}"]
-rows = run_query(f'SELECT * FROM "{sheet_url}"')
-
-# Print results.
-# for row in rows:
-#     st.write(f"{row.Name} has a score of {round(row.Score)}")
-
-df = pd.DataFrame(rows)[["User_ID", "Name", "Score"]]
-df.set_index("User_ID", inplace=True)
-
 st.write("")
-st.write("")
-st.subheader(f"Leaderboard for {cohort_name.upper()}")
-st.dataframe(df)
+
+if st.button("Generate Leaderboard"):
+
+    sheet_url = st.secrets[f"private_gsheets_url_{cohort_name}"]
+    rows = run_query(f'SELECT * FROM "{sheet_url}"')
+
+    # Print results.
+    # for row in rows:
+    #     st.write(f"{row.Name} has a score of {round(row.Score)}")
+
+    df = pd.DataFrame(rows)[["User_ID", "Name", "Score"]]
+    df.set_index("User_ID", inplace=True)
+
+    st.write("")
+    st.write("")
+    st.subheader(f"Leaderboard for {cohort_name.upper()}")
+    st.dataframe(df)
